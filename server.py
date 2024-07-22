@@ -8,6 +8,11 @@ import os
 
 app = Flask(__name__)
 
+@app.route('/get_config', methods=['GET'])
+def get_config():
+    port = int(os.getenv('PORT', 4000))
+    return jsonify({'port': port})
+    
 __locations = None
 __data_columns = None
 __model = None
@@ -89,4 +94,5 @@ def get_data_columns():
 if __name__ == "__main__":
     print("Starting Python Flask Server For Home Price Prediction...")
     load_saved_artifacts()
-    app.run()
+    port = int(os.getenv('PORT',4000))
+    app.run(host='0.0.0.0', port=port)
